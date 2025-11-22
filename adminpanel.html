@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel • V&R KITCHEN</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: 'Poppins', sans-serif; background:#f9fafb; }
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="flex items-center justify-center h-screen">
+  <form id="loginForm" class="bg-white p-10 rounded-xl shadow-lg w-full max-w-sm">
+    <h2 class="text-2xl font-bold mb-6 text-center">Admin Login</h2>
+    <input type="text" id="username" placeholder="Username" class="w-full p-3 mb-4 border rounded" required>
+    <input type="password" id="password" placeholder="Password" class="w-full p-3 mb-4 border rounded" required>
+    <button type="submit" class="w-full bg-red-500 text-white py-3 rounded hover:bg-red-600">Login</button>
+  </form>
+</div>
+
+<div id="adminPanel" class="hidden p-10">
+  <h1 class="text-3xl font-bold mb-6">Bookings Dashboard</h1>
+  <input type="text" id="search" placeholder="Search bookings" class="mb-4 p-3 border rounded w-full max-w-md">
+  <table class="min-w-full bg-white rounded-xl shadow overflow-hidden">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="text-left p-4">Name</th>
+        <th class="text-left p-4">Phone</th>
+        <th class="text-left p-4">Event</th>
+        <th class="text-left p-4">Date</th>
+        <th class="text-left p-4">Details</th>
+        <th class="text-left p-4">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="bookingTable"></tbody>
+  </table>
+  <button id="exportCSV" class="mt-4 bg-green-600 text-white py-3 px-6 rounded hover:bg-green-700">Export CSV</button>
+</div>
+
+<script>
+const USERNAME = 'admin';
+const PASSWORD = 'admin123';
+const loginScreen = document.getElementById('loginScreen');
+const adminPanel = document.getElementById('adminPanel');
+const loginForm = document.getElementById('loginForm');
+const bookingTable = document.getElementById('bookingTable');
+const searchInput = document.getElementById('search');
+
+// Login
+loginForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const user = document.getElementById('username').value;
+  const pass = document.getElementById('password').value;
+  if(user === USERNAME && pass === PASSWORD){
+    loginScreen.classList.add('hidden');
+    adminPanel.classList.remove('hidden');
+    loadBookings();
+  } else {
+    alert('Incorrect username or password');
+  }
+});
+
+// Load bookings from localStorage
+function loadBookings(){
+  let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+  displayBookings(bookings);
+}
+
+// Display bookings
+function displayBookings(bookings){
+  bookingTable.innerHTML = '';
+  bookings.forEach((b,i)=>{
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td class="p-4">${b.name}</td>
+      <td class="p-4">${b.phone}</td>
+      <td class="p-4">${b.event}</td>
+      <td class="p-4">${b.date || ''}</td>
+      <td class="p-4">${b.details}</td>
+      <td class="p-4"><button onclick="deleteBooking(${i})" class='bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600'>Delete</button></td>
+    `;
+    bookingTable.appendChild(row);
+  });
+}
+
+// Delete booking
+function deleteBooking(index){
+  let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+  bookings.splice(index,1);
+  localStorage.setItem('bookings', JSON.stringify(bookings));
+  loadBookings();
+}
+
+// Search bookings
+searchInput.addEventListener('input', ()=>{
+  let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+  const term = searchInput.value.toLowerCase();
+  const filtered = bookings.filter(b=> b.name.toLowerCase().includes(term) || b.phone.includes(term) || b.event.toLowerCase().includes(term));
+  displayBookings(filtered);
+});
+
+// Export CSV
+document.getElementById('exportCSV').addEventListener('click', ()=>{
+  let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+  if(bookings.length===0) return alert('No bookings to export');
+  const csv = [Object.keys(bookings[0]).join(','), ...bookings.map(b=>Object.values(b).map(v=>`\"${v}\"`).join(','))].join('\n');
+  const blob = new Blob([csv], {type: 'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'bookings.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+// Auto-refresh bookings table every second
+setInterval(() => {
+  if(!adminPanel.classList.contains('hidden')){
+    let searchTerm = searchInput.value;
+    if(searchTerm.trim() === '') loadBookings();
+    else {
+      let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+      const filtered = bookings.filter(b=> b.name.toLowerCase().includes(searchTerm.toLowerCase()) || b.phone.includes(searchTerm) || b.event.toLowerCase().includes(searchTerm));
+      displayBookings(filtered);
+    }
+  }
+}, 1000);
+</script>
+
+</body>
+</html>

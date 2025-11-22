@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V&R KITCHEN • Landing</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Poppins', sans-serif; }
+  
+  /* Buttons */
+  .btn { 
+    @apply bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:-translate-y-1 hover:shadow-xl; 
+  }
+
+  /* Floating call button */
+  .floating-call { 
+    animation: pulse 2s infinite; 
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .floating-call:hover { 
+    transform: scale(1.1); 
+    box-shadow: 0 0 20px #22c55e; 
+  }
+
+  @keyframes pulse { 
+    0%,100%{transform:scale(1);}50%{transform:scale(1.1);} 
+  }
+
+  /* Hero animation */
+  @keyframes fadeIn { 
+    from {opacity:0; transform: translateY(20px);} 
+    to {opacity:1; transform: translateY(0);} 
+  }
+  .animate-fadeIn { animation: fadeIn 1s forwards; }
+  .animate-fadeIn.delay-500 { animation-delay: 0.5s; }
+  .animate-fadeIn.delay-1000 { animation-delay: 1s; }
+
+  /* Hero gradient text */
+  .hero-gradient { 
+    background: linear-gradient(90deg, #f87171, #fbbf24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Gallery hover overlay */
+  .gallery-item { 
+    position: relative; 
+    overflow: hidden; 
+    border-radius: 1rem; 
+  }
+  .gallery-item img { 
+    transition: transform 0.5s; 
+  }
+  .gallery-item:hover img { 
+    transform: scale(1.1); 
+  }
+  .gallery-overlay { 
+    position: absolute; 
+    inset: 0; 
+    background: rgba(0,0,0,0.5); 
+    color: white; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-weight: 600; 
+    font-size: 1.25rem; 
+    opacity: 0; 
+    transition: opacity 0.3s;
+  }
+  .gallery-item:hover .gallery-overlay { 
+    opacity: 1; 
+  }
+</style>
+</head>
+<body class="bg-gray-100">
+
+<!-- Hero Section -->
+<header class="relative h-[85vh] flex items-center justify-center text-center bg-cover bg-center" style="background-image:url('https://i.pinimg.com/736x/18/d8/87/18d88705a9e788dabb1223078e152087.jpg')">
+  <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+  <div class="relative z-10 text-white px-4">
+    <h1 class="text-5xl md:text-7xl font-bold mb-4 animate-fadeIn hero-gradient">V&R KITCHEN</h1>
+    <p class="text-lg md:text-2xl max-w-2xl mx-auto mb-8 animate-fadeIn delay-500">Premium Catering for Weddings, Birthdays, and Corporate Events</p>
+    <a href="#booking" class="btn inline-block animate-fadeIn delay-1000">Book Now</a>
+  </div>
+</header>
+
+<!-- Gallery Section -->
+<section id="gallery" class="py-16 px-6 max-w-7xl mx-auto">
+  <h2 class="text-4xl font-bold text-center mb-12">Our Dishes</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+    <!-- Dish 1 -->
+    <div class="gallery-item cursor-pointer" onclick="openModal('http://bit.ly/4o8EcAt')">
+      <img src="http://bit.ly/4o8EcAt" class="w-full h-64 object-cover rounded-xl shadow-lg">
+      <div class="gallery-overlay">Local Dishes</div>
+    </div>
+
+    <!-- Dish 2 -->
+    <div class="gallery-item cursor-pointer" onclick="openModal('https://i.pinimg.com/736x/98/a1/d9/98a1d929a4557b0ab21fcb4cec2e1302.jpg')">
+      <img src="https://i.pinimg.com/736x/98/a1/d9/98a1d929a4557b0ab21fcb4cec2e1302.jpg" class="w-full h-64 object-cover rounded-xl shadow-lg">
+      <div class="gallery-overlay">Drinks / Catering Table</div>
+    </div>
+
+    <!-- Dish 3 -->
+    <div class="gallery-item cursor-pointer" onclick="openModal('https://i.pinimg.com/736x/6d/32/30/6d32307ec0ca4f85bd33e191f0a51b00.jpg')">
+      <img src="https://i.pinimg.com/736x/6d/32/30/6d32307ec0ca4f85bd33e191f0a51b00.jpg" class="w-full h-64 object-cover rounded-xl shadow-lg">
+      <div class="gallery-overlay">Rice Meals</div>
+    </div>
+
+    <!-- Dish 4 -->
+    <div class="gallery-item cursor-pointer" onclick="openModal('https://i.pinimg.com/736x/7a/74/7d/7a747de21cfc6d31b87d471d3bfc781c.jpg')">
+      <img src="https://i.pinimg.com/736x/7a/74/7d/7a747de21cfc6d31b87d471d3bfc781c.jpg" class="w-full h-64 object-cover rounded-xl shadow-lg">
+      <div class="gallery-overlay">Small Chops</div>
+    </div>
+
+    <!-- Dish 5 -->
+    <div class="gallery-item cursor-pointer" onclick="openModal('https://i.pinimg.com/736x/07/78/4e/07784e2229947c5c8238380b739cb490.jpg')">
+      <img src="https://i.pinimg.com/736x/07/78/4e/07784e2229947c5c8238380b739cb490.jpg" class="w-full h-64 object-cover rounded-xl shadow-lg">
+      <div class="gallery-overlay">Dessert</div>
+    </div>
+
+    <!-- Dish 6 -->
+    <div class="gallery-item cursor-pointer" onclick="openModal('https://i.pinimg.com/736x/45/74/21/457421a803daa72b090d11427dbae86a.jpg')">
+      <img src="https://i.pinimg.com/736x/45/74/21/457421a803daa72b090d11427dbae86a.jpg" class="w-full h-64 object-cover rounded-xl shadow-lg">
+      <div class="gallery-overlay">Grills</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Modal -->
+<div id="imgModal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 hidden">
+  <span class="absolute top-6 right-6 text-white text-3xl cursor-pointer" onclick="closeModal()">&times;</span>
+  <img id="modalImg" src="" class="max-h-[90%] max-w-[90%] rounded-xl shadow-lg transition-transform duration-300">
+</div>
+
+<script>
+  function openModal(src) {
+    const modal = document.getElementById('imgModal');
+    const modalImg = document.getElementById('modalImg');
+    modalImg.src = src;
+    modal.classList.remove('hidden');
+    modalImg.style.transform = 'scale(0.8)';
+    setTimeout(() => { modalImg.style.transform = 'scale(1)'; }, 50);
+  }
+  function closeModal() {
+    const modal = document.getElementById('imgModal');
+    const modalImg = document.getElementById('modalImg');
+    modalImg.style.transform = 'scale(0.8)';
+    setTimeout(() => { modal.classList.add('hidden'); }, 200);
+  }
+  document.getElementById('imgModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+
+<!-- Booking Form Section -->
+<section id="booking" class="py-16 px-6">
+  <h2 class="text-4xl font-bold text-center mb-12">Book Our Service Today</h2>
+  <form id="bookForm" action="https://formspree.io/f/xeodrjol" method="POST" class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow space-y-6">
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="relative">
+        <input type="text" name="name" placeholder=" " required class="peer border-b-2 border-gray-300 focus:border-red-500 w-full py-3 px-2 outline-none transition">
+        <label class="absolute left-2 -top-3.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:-top-3.5 peer-focus:text-gray-700 peer-focus:text-sm">Your Name</label>
+      </div>
+      <div class="relative">
+        <input type="text" name="phone" placeholder=" " required class="peer border-b-2 border-gray-300 focus:border-red-500 w-full py-3 px-2 outline-none transition">
+        <label class="absolute left-2 -top-3.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:-top-3.5 peer-focus:text-gray-700 peer-focus:text-sm">Phone Number</label>
+      </div>
+      <div class="relative">
+        <input type="text" name="event" placeholder=" " required class="peer border-b-2 border-gray-300 focus:border-red-500 w-full py-3 px-2 outline-none transition">
+        <label class="absolute left-2 -top-3.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:-top-3.5 peer-focus:text-gray-700 peer-focus:text-sm">Event Type</label>
+      </div>
+      <div class="relative">
+        <input type="date" name="date" placeholder=" " required class="peer border-b-2 border-gray-300 focus:border-red-500 w-full py-3 px-2 outline-none transition">
+        <label class="absolute left-2 -top-3.5 text-gray-500 text-sm transition-all peer-focus:-top-3.5 peer-focus:text-gray-700 peer-focus:text-sm">Event Date</label>
+      </div>
+    </div>
+    <div class="relative">
+      <textarea name="details" rows="5" placeholder=" " class="peer border-b-2 border-gray-300 focus:border-red-500 w-full py-3 px-2 outline-none transition"></textarea>
+      <label class="absolute left-2 -top-3.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:-top-3.5 peer-focus:text-gray-700 peer-focus:text-sm">Event Details / Venue</label>
+    </div>
+    <button type="submit" class="w-full btn">Submit Booking</button>
+    <p id="successMsg" class="text-green-600 text-center hidden mt-2">Booking submitted successfully!</p>
+  </form>
+</section>
+
+<!-- Floating Call Button -->
+<a href="tel:+2348064731261" class="fixed bottom-6 right-6 bg-green-600 text-white px-6 py-4 rounded-full shadow-xl text-xl font-bold floating-call">📞</a>
+
+<!-- Visible Admin Button -->
+<button onclick="window.location.href='adminpanel.html'" 
+        class="fixed top-4 right-4 bg-gray-800 text-white px-3 py-1 rounded-lg text-sm shadow-lg hover:bg-gray-700 z-50">
+  Admin
+</button>
+
+<!-- Secret Admin Redirect & Form Success -->
+<script>
+let keys = [];
+document.addEventListener('keydown', e => {
+  keys.push(e.key);
+  if(keys.join('').includes('AAA')){
+    window.location.href = 'adminpanel.html';
+  }
+  if(keys.length > 5) keys.shift();
+});
+
+// Booking Form Submission - Save to localStorage
+const form = document.getElementById('bookForm');
+const successMsg = document.getElementById('successMsg');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault(); // prevent default submission
+  
+  // Get form values
+  const name = form.name.value.trim();
+  const phone = form.phone.value.trim();
+  const event = form.event.value.trim();
+  const date = form.date.value;
+  const details = form.details.value.trim();
+
+  // Get existing bookings from localStorage
+  let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+
+  // Add new booking
+  bookings.push({ name, phone, event, date, details });
+
+  // Save back to localStorage
+  localStorage.setItem('bookings', JSON.stringify(bookings));
+
+  // Show success message
+  successMsg.classList.remove('hidden');
+
+  // Reset form after submission
+  form.reset();
+
+  // Hide message after 3 seconds
+  setTimeout(() => { successMsg.classList.add('hidden'); }, 3000);
+});
+</script>
+
+</body>
+</html>

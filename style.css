@@ -1,0 +1,8 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0d0f11;
+}
+
+.btn {
+    @apply bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition;
+}

@@ -196,8 +196,8 @@
   Admin
 </button>
 
-<!-- Secret Admin Redirect & Form Success -->
 <script>
+// SECRET ADMIN SHORTCUT (KEEPING THIS)
 let keys = [];
 document.addEventListener('keydown', e => {
   keys.push(e.key);
@@ -207,39 +207,19 @@ document.addEventListener('keydown', e => {
   if(keys.length > 5) keys.shift();
 });
 
-// Booking Form Submission - Save to localStorage
+// BOOKING FORM SUBMISSION - FORMSPREE DIRECT SUBMIT
 const form = document.getElementById('bookForm');
 const successMsg = document.getElementById('successMsg');
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault(); // prevent default submission
-  
-  // Get form values
-  const name = form.name.value.trim();
-  const phone = form.phone.value.trim();
-  const event = form.event.value.trim();
-  const date = form.date.value;
-  const details = form.details.value.trim();
-
-  // Get existing bookings from localStorage
-  let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
-
-  // Add new booking
-  bookings.push({ name, phone, event, date, details });
-
-  // Save back to localStorage
-  localStorage.setItem('bookings', JSON.stringify(bookings));
-
-  // Show success message
+form.addEventListener('submit', () => {
   successMsg.classList.remove('hidden');
 
-  // Reset form after submission
-  form.reset();
-
-  // Hide message after 3 seconds
-  setTimeout(() => { successMsg.classList.add('hidden'); }, 3000);
+  setTimeout(() => {
+    successMsg.classList.add('hidden');
+  }, 3000);
 });
 </script>
+
 
 </body>
 </html>
